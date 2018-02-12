@@ -9,7 +9,7 @@ const port=process.env.PORT||3000;
 *   password:""
 *   }
 *
-*   output: create mongoDB id
+ * output : "failure" or  mongo id
 * */
 app.post("/register",function(req,res){
     console.log(req);
@@ -22,14 +22,17 @@ app.post("/register",function(req,res){
  * name:"",
  * author:"",
  * tag:""
+ * id:"a number"
  * }
  *
- * output: mongo id of book added
+ * output : {serverId:" null in case of any failure"
+ *           id:" same id as provided in req"
+ * }
  */
 
 app.post("/addBook",function(req,res){
     console.log(req);
-    res.send("id");
+    res.send({severId:"serverID",id:"id"});
 });
 
 
