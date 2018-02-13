@@ -25,16 +25,30 @@ app.post("/register",function(req,res){
  * id:"a number"
  * }
  *
- * output : {serverId:" null in case of any failure"
- *           id:" same id as provided in req"
- * }
+ * serverId:" null in case of any failure"
+ *
  */
 
 app.post("/addBook",function(req,res){
     console.log(req);
-    res.send({severId:"serverID",id:"id"});
+    res.send("serverID");
 });
 
+
+/*
+* inputs :{
+* name:"",
+* author:"",
+* tag:"",
+* serverId:""
+* }
+*
+* output:" "failure" or "success""
+* */
+app.post("/updateBook",function(req,res){
+    console.log(req);
+    res.send("success");
+});
 
 app.listen(port,function(){
     console.log(`server running on ${port}`);
