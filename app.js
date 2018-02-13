@@ -51,10 +51,9 @@ app.post("/updateBook",function(req,res){
 });
 
 
-app.post("/getBooks",function (req, res) {
+app.get("/getBooks",function (req, res) {
     console.log(req);
-    //[{name:"book",author:"author",tag:"tag",serverId:"serverId"}]
-    res.send("esdrffd");
+    res.send([{name:"book",author:"author",tag:"tag",serverId:"serverId"}]);
 });
 
 app.listen(port,function(){
