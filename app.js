@@ -53,7 +53,8 @@ app.post("/updateBook",function(req,res){
 
 app.get("/getBooks",function (req, res) {
     console.log(req);
-    res.send([{name:"book",author:"author",tag:"tag",serverId:"serverId"}]);
+    //[{name:"book",author:"author",tag:"tag",serverId:"serverId"}]
+    res.send("esdrffd");
 });
 
 app.listen(port,function(){
