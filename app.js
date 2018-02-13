@@ -50,6 +50,12 @@ app.post("/updateBook",function(req,res){
     res.send("success");
 });
 
+
+app.get("/getBooks",function (req, res) {
+    console.log(req);
+    res.send([{name:"book",author:"author",tag:"tag",serverId:"serverId"}]);
+});
+
 app.listen(port,function(){
     console.log(`server running on ${port}`);
 });
