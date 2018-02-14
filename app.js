@@ -62,9 +62,9 @@ app.get("/searchBooks",function (req, res) {
     var dummyResult = [];
     const obj={name:"book",author:"author",tag:"tag",serverId:"serverId"};
     for (i=0;i<50;i++){
-        res.push(dummyResult);
+        dummyResult.push(obj);
     }
-    res.send(res);
+    res.send(dummyResult);
 });
 
 app.listen(port,function(){
