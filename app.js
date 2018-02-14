@@ -57,7 +57,7 @@ app.get("/getBooks",function (req, res) {
 });
 
 
-app.get("/searchBooks",function (req, res) {
+app.post("/searchBooks",function (req, res) {
     console.log(req);
     var dummyResult = [];
     const obj={name:"book",author:"author",tag:"tag",serverId:"serverId"};
