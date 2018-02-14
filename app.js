@@ -56,6 +56,17 @@ app.get("/getBooks",function (req, res) {
     res.send([{name:"book",author:"author",tag:"tag",serverId:"serverId"}]);
 });
 
+
+app.get("/searchBooks",function (req, res) {
+    console.log(req);
+    var dummyResult = [];
+    const obj={name:"book",author:"author",tag:"tag",serverId:"serverId"};
+    for (i=0;i<50;i++){
+        res.push(dummyResult);
+    }
+    res.send(res);
+});
+
 app.listen(port,function(){
     console.log(`server running on ${port}`);
 });
