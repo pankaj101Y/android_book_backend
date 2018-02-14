@@ -57,6 +57,14 @@ app.get("/getBooks",function (req, res) {
 });
 
 
+
+/*
+* input:{query:"book name or something like that"}
+*
+* output :"array of books which best match to query"
+*
+* */
+
 app.post("/searchBooks",function (req, res) {
     console.log(req);
     var dummyResult = [];
