@@ -40,11 +40,11 @@ app.post("/register",function(req,res){
         body.password= hash;
         save(body,function(err,data){
             if(err)
-                return    res.send({id:null});
+                return    res.send("failed");
             if(data)
-                return  res.send({id:data._id});
+                return  res.send(data._id);
             else
-                return res.send({id:null});
+                return res.send("failed");
         });
     });
 });
