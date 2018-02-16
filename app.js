@@ -1,6 +1,26 @@
 const express = require('express');
 const app = express();
-
+var {hash ,compare}= require('./hashing.js');
+var {
+    findbyusername,
+    save,
+    findbyid,
+    userupdate,
+    bookadd,
+    addtags,
+    increasepopularity,
+    bookpost,
+    mybook,
+    deletebook,
+    editbook,
+    findbookbyid,
+    createwishlist,
+    additem,
+    findwishlist,
+    removeitem,
+    allbook
+}= require('./db.js');
+var {findbook}= require('./search');
 const port=process.env.PORT||3000;
 
 /*
@@ -12,8 +32,21 @@ const port=process.env.PORT||3000;
  * output : "failure" or  mongo id
 * */
 app.post("/register",function(req,res){
-    console.log(req);
-    res.send("id");
+    var body= {};
+    body.name= req.name;
+    body.no = req.no;
+    body.email = req.email;
+    hash(req.password,function(err,hash){
+        body.password= hash;
+        save(body,function(err,data){
+            if(err)
+                return    res.send({id:null});
+            if(data)
+                return  res.send({id:data._id});
+            else
+                return res.send({id:null});
+        });
+    });
 });
 
 
@@ -21,7 +54,7 @@ app.post("/register",function(req,res){
  *inputs:{
  * name:"",
  * author:"",
- * tag:""
+ * tags:""
  * id:"a number"
  * }
  *
@@ -30,8 +63,20 @@ app.post("/register",function(req,res){
  */
 
 app.post("/addBook",function(req,res){
-    console.log(req);
-    res.send("serverID");
+    var body ={};
+    body.name=req.name;
+    body.author=req.author;
+    body.tags=req.tags;
+    body.userid= req.userid;
+    body.sqlid- req.id;
+    bookadd(body,function(err,data){
+        if(err)
+            return   res.send({serverId:null});
+        if(data)
+            return  res.send({serverId:data._id});
+        else
+            return  res.send({serverId:null});
+    });
 });
 
 
@@ -46,14 +91,33 @@ app.post("/addBook",function(req,res){
 * output:" "failure" or "success""
 * */
 app.post("/updateBook",function(req,res){
-    console.log(req);
-    res.send("success");
+    var body={};
+    if(req.name)
+        body.name= req.name;
+    if(req.author)
+        body.author= req.author;
+    if(req.tag)
+        body.tag= req.tag;
+    var bookid= req.serverId;
+    editbook(bookid,body,function(err,data){
+        if(err)
+            res.send("failure");
+        if(data)
+            res.send('success');
+        else
+            res.send("failure");
+    });
 });
 
 
 app.get("/getBooks",function (req, res) {
-    console.log(req);
-    res.send([{name:"book",author:"author",tag:"tag",serverId:"serverId"}]);
+    var userid = req.userid;
+    bookpost(userid,function(err,data){
+        if(err)
+            res.send([]);
+        else
+            res.send(data);
+    });
 });
 
 
@@ -66,13 +130,15 @@ app.get("/getBooks",function (req, res) {
 * */
 
 app.post("/searchBooks",function (req, res) {
-    console.log(req);
-    var dummyResult = [];
-    const obj={name:"book",author:"author",tag:"tag",serverId:"serverId"};
-    for (i=0;i<50;i++){
-        dummyResult.push(obj);
-    }
-    res.send(dummyResult);
+    var search = req.query;
+    allbook(function(err,data){
+        findbook(search,data,function(err,data1){
+            if(err)
+                res.send([]);
+            else
+                res.send(data1);
+        });
+    });
 });
 
 app.listen(port,function(){
