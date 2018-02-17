@@ -43,11 +43,11 @@ app.post("/register",function(req,res){
         body.password= hash;
         save(body,function(err,data){
             if(err)
-                return    res.send({id:null});
+                return    res.send("failed");
             if(data)
-                return  res.send({id:data._id});
+                return  res.send(data._id);
             else
-                return res.send({id:null});
+                return res.send("failed");
         });
     });
 });
@@ -68,11 +68,11 @@ app.post("/addBook",function(req,res){
     var body =req.body;
     bookadd(body,function(err,data){
         if(err)
-            return   res.send({serverId:null});
+            return   res.send("failed");
         if(data)
-            return  res.send({serverId:data._id});
+            return  res.send(data._id);
         else
-            return  res.send({serverId:null});
+            return  res.send("failed");
     });
 });
 
@@ -98,11 +98,11 @@ app.post("/updateBook",function(req,res){
     var bookid= req.body.serverId;
     editbook(bookid,body,function(err,data){
         if(err)
-            res.send({status:"failure"});
+            res.send("failed");
         if(data)
-            res.send({status:'success'});
+            res.send('success');
         else
-            res.send({status:"failure"});
+            res.send("failure");
     });
 });
 
