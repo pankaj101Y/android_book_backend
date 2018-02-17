@@ -58,7 +58,6 @@ app.post("/register",function(req,res){
  * name:"",
  * author:"",
  * tags:""
- * id:"a number"
  * }
  *
  * serverId:" null in case of any failure"
