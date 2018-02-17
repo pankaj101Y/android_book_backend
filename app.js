@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 var {hash ,compare}= require('./hashing.js');
 var {
@@ -20,8 +21,11 @@ var {
     removeitem,
     allbook
 }= require('./db.js');
-var {findbook}= require('./search');
+const {findbook}= require('./search');
 const port=process.env.PORT||3000;
+
+
+app.use(bodyParser.json());
 
 /*
 * inputs:{
@@ -32,11 +36,8 @@ const port=process.env.PORT||3000;
  * output : "failure" or  mongo id
 * */
 app.post("/register",function(req,res){
-    var body= {};
-    body.name= req.name;
-    body.no = req.no;
-    body.email = req.email;
-    hash(req.password,function(err,hash){
+    var body= req.body;
+    hash(body.password,function(err,hash){
         body.password= hash;
         save(body,function(err,data){
             if(err)
