@@ -1,6 +1,7 @@
+// app.js
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
+var bodyParser = require('body-parser');
 var {hash ,compare}= require('./hashing.js');
 var {
     findbyusername,
@@ -21,10 +22,11 @@ var {
     removeitem,
     allbook
 }= require('./db.js');
-const {findbook}= require('./search');
+var {findbook}= require('./search');
 const port=process.env.PORT||3000;
+app.use(bodyParser.urlencoded({ extended: true }));
 
-
+// parse application/json
 app.use(bodyParser.json());
 
 /*
@@ -37,17 +39,15 @@ app.use(bodyParser.json());
 * */
 app.post("/register",function(req,res){
     var body= req.body;
-    res.send("request ="+JSON.stringify(req));
-
     hash(body.password,function(err,hash){
         body.password= hash;
         save(body,function(err,data){
             if(err)
-                return    res.send("failed");
+                return    res.send({id:null});
             if(data)
-                return  res.send(data._id);
+                return  res.send({id:data._id});
             else
-                return res.send("failed");
+                return res.send({id:null});
         });
     });
 });
@@ -66,12 +66,7 @@ app.post("/register",function(req,res){
  */
 
 app.post("/addBook",function(req,res){
-    var body ={};
-    body.name=req.name;
-    body.author=req.author;
-    body.tags=req.tags;
-    body.userid= req.userid;
-    body.sqlid- req.id;
+    var body =req.body;
     bookadd(body,function(err,data){
         if(err)
             return   res.send({serverId:null});
@@ -95,31 +90,27 @@ app.post("/addBook",function(req,res){
 * */
 app.post("/updateBook",function(req,res){
     var body={};
-    if(req.name)
-        body.name= req.name;
-    if(req.author)
-        body.author= req.author;
-    if(req.tag)
-        body.tag= req.tag;
-    var bookid= req.serverId;
+    if(req.body.name)
+        body.name= req.body.name;
+    if(req.body.author)
+        body.author= req.body.author;
+    if(req.body.tag)
+        body.tag= req.body.tag;
+    var bookid= req.body.serverId;
     editbook(bookid,body,function(err,data){
         if(err)
-            res.send("failure");
+            res.send({status:"failure"});
         if(data)
-            res.send('success');
+            res.send({status:'success'});
         else
-            res.send("failure");
+            res.send({status:"failure"});
     });
 });
 
 
 app.get("/getBooks",function (req, res) {
-    var userid = req.userid;
-    bookpost(userid,function(err,data){
-        if(err)
-            res.send([]);
-        else
-            res.send(data);
+    allbook(function(err,data){
+        res.send(data);
     });
 });
 
@@ -133,7 +124,7 @@ app.get("/getBooks",function (req, res) {
 * */
 
 app.post("/searchBooks",function (req, res) {
-    var search = req.query;
+    var search = req.body.query;
     allbook(function(err,data){
         findbook(search,data,function(err,data1){
             if(err)
@@ -144,6 +135,6 @@ app.post("/searchBooks",function (req, res) {
     });
 });
 
-app.listen(port,function(){
-    console.log(`server running on ${port}`);
+app.listen(8080,function(){
+    console.log(`server running on 8080'`);
 });
