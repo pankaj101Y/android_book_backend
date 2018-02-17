@@ -39,6 +39,7 @@ app.use(bodyParser.json());
 * */
 app.post("/register",function(req,res){
     var body= req.body;
+    res.send(body);
     hash(body.password,function(err,hash){
         body.password= hash;
         save(body,function(err,data){
