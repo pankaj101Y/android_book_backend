@@ -40,7 +40,7 @@ app.post("/register",function(req,res){
     hash(body.password,function(err,hash){
         body.password= hash;
         save(body,function(err,data){
-            res.send(data+" err= "+err);
+            res.send("body="+body+data+" err= "+err);
             if(err)
                 return    res.send("failed");
             if(data)
