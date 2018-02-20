@@ -125,11 +125,8 @@ app.get("/getBooks",function (req, res) {
 app.post("/searchBooks",function (req, res) {
     var search = req.body.query;
     allbook(function(err,data){
-        findbook(search,data,function(err,data1){
-            if(err)
-                res.send([]);
-            else
-                res.send(data1);
+        findbook(search,data,function(data1){
+             res.send(data1);
         });
     });
 });
