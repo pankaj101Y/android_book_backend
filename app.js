@@ -176,7 +176,9 @@ app.post("/login",function (req, res) {
 * books ke saath
 * */
 app.post("/viewProfile",function (req, res) {
-
+    res.send({status:"success",
+    name:"pankaj",
+    phone:"12345676"});
 });
 
 
