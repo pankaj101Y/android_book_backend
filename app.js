@@ -137,6 +137,43 @@ app.post("/searchBooks",function (req, res) {
 
 /*
 * inputs
+ * { username:"",
+ *   password:""
+* }
+*
+* outputs
+* {
+*  status:" success or failed"
+*  username:"",
+*  phone:"",
+*  id:"mongo id of user"
+* }
+*
+* */
+
+app.post("/login",function (req, res) {
+    var email = req.body.email;
+    var password = req.body.password;
+    findbyemail(email,function(err,data){
+        if(!data)
+            res.send({status:"failed"});
+        compare(password,data.password,function(err,check){
+            if(check){
+                var user={};
+                user.name=data.name;
+                user.no=data.no;
+                user.username=data.email;
+                user.id= data._id;
+                user.status='success';
+                res.send(data);
+            }
+            else{
+                res.send({status:"failed"});
+            }
+        });
+    });
+});/*
+* inputs
  * { email:"",
  *   password:""
 * }
@@ -152,14 +189,28 @@ app.post("/searchBooks",function (req, res) {
 * */
 
 app.post("/login",function (req, res) {
-    res.send(
-        {
-            status:"this",
-            username:"pankaj@323",
-            phone:"phone",
-            id:"id"
+    var email = req.body.email;
+    var password = req.body.password;
+    findbyemail(email,function(err,data){
+        if(!data)
+            res.send({status:"failed"});
+        compare(password,data.password,function(err,check){
+            if(check){
+                var user={};
+                user.name=data.name;
+                user.no=data.no;
+                user.username=data.email;
+                user.id= data._id;
+                user.status='success';
+                res.send(data);
+            }
+            else{
+                res.send({status:"failed"});
+            }
         });
+    });
 });
+
 
 
 
@@ -167,7 +218,7 @@ app.post("/login",function (req, res) {
 * input  {id:"user mongoId"}
 *
 * output: {status:"success or failed"
-*          username:"",
+*          name:"",
 *          phoneNumber:""
 * }
 *
@@ -176,48 +227,38 @@ app.post("/login",function (req, res) {
 * books ke saath
 * */
 app.post("/viewProfile",function (req, res) {
-    res.send({status:"success",
-    name:"pankaj",
-    phone:"12345676"});
+    var id = req.body._id;
+    findbyid(id,function(err,data){
+
+        if(!data)
+            res.send({status:"failed"});
+        else{
+            var str={};
+            str.status= 'success';
+            str.name= data.name;
+            str.phoneNumber= data.no;
+            res.send(str);
+        }
+    });
 });
 
 
 
+
+// further routes
 /*
-* input {bid:"book mongo id"}
-*
-* output:{status:"success or failed"
-*
-*    "bookName":"",
-*    "bookAuthor":"",
-*    "tag":""
-* }
-*
-* */
-
-app.get("/getBook",function (req, res) {
-   res.send({status:"success",
-   name:"hp",
-   author:"kj",
-   tag:"fiction",
-   _id:"this is s"});
-});
-
-
-/*
-* input {userId:"user mongo id"}
-*
-* output: my books Array
-* }
-*
-* */
-
-app.post("/getMyBooks",function (req, res) {
-    res.send([{status:"success",
-        name:"hp",
-        author:"kj",
-        tags:["fiction"],
-        _id:"this is s"}]);
+  inputs:{
+   id:
+  },
+  output:{
+  an array of books
+  }
+*/
+app.post('/mybooks',function(req,res){
+    var id = req.body._id.toString();
+    mybook(id,function(err,data){
+        res.send(data);
+    });
 });
 
 
@@ -250,6 +291,30 @@ app.post("/getMyWishList",function (req, res) {
 
 app.post("/addToWishList",function (req, res) {
     res.send("success");
+});
+
+
+/*
+for deleting a book
+  inputs:{
+    id:
+  },
+  output:{
+    status:"success or failure"
+  }
+*/
+app.post('/deletebook',function(req,res){
+    var id = req.body.id;
+    deletebook(id,function(err,data){
+        if(err)
+            res.send({status:"failed"});
+        else{
+            if(data)
+                res.send({status:"success"});
+            else
+                res.send({status:"failed"});
+        }
+    });
 });
 
 
