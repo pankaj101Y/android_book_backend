@@ -137,7 +137,7 @@ app.post("/searchBooks",function (req, res) {
 
 /*
 * inputs
- * { username:"",
+ * { email:"",
  *   password:""
 * }
 *
@@ -152,7 +152,12 @@ app.post("/searchBooks",function (req, res) {
 * */
 
 app.post("/login",function (req, res) {
-    res.send({response:"ffdfdff"});
+    res.send(
+        {
+            status:"this",
+            username:"pankaj@323",
+            password:"password"
+        });
 });
 
 
@@ -161,7 +166,7 @@ app.post("/login",function (req, res) {
 * input  {id:"user mongoId"}
 *
 * output: {status:"success or failed"
-*          name:"",
+*          username:"",
 *          phoneNumber:""
 * }
 *
