@@ -214,7 +214,7 @@ app.post("/getMyBooks",function (req, res) {
     res.send({status:"success",
         name:"hp",
         author:"kj",
-        tags:"fiction",
+        tags:["fiction"],
         _id:"this is s"});
 });
 
@@ -230,9 +230,11 @@ app.post("/getMyBooks",function (req, res) {
 
 app.post("/getMyWishList",function (req, res) {
     res.send({status:"success",
-        bookName:"hp",
-        bookAuthor:"kj",
-        tags:"fiction"});
+        name:"hp",
+        author:"kj",
+        tags:["fiction"],
+        _id:"id"}
+        );
 });
 
 
