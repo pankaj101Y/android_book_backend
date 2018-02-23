@@ -179,6 +179,77 @@ app.post("/viewProfile",function (req, res) {
 
 });
 
+
+
+/*
+* input {bid:"book mongo id"}
+*
+* output:{status:"success or failed"
+*
+*    "bookName":"",
+*    "bookAuthor":"",
+*    "tag":""
+* }
+*
+* */
+
+app.get("/getBook",function (req, res) {
+   res.send({status:"success",
+   name:"hp",
+   author:"kj",
+   tag:"fiction",
+   _id:"this is s"});
+});
+
+
+/*
+* input {userId:"user mongo id"}
+*
+* output: my books Array
+* }
+*
+* */
+
+app.get("/getMyBooks",function (req, res) {
+    res.send({status:"success",
+        name:"hp",
+        author:"kj",
+        tag:"fiction",
+        _id:"this is s"});
+});
+
+
+
+/*
+* input {userId:"user mongo id"}
+*
+* output: wish list books Array
+* }
+*
+* */
+
+app.get("/getMyWishList",function (req, res) {
+    res.send({status:"success",
+        bookName:"hp",
+        bookAuthor:"kj",
+        tag:"fiction"});
+});
+
+
+/*
+* saves book in my wish list
+*
+* input :{id:""}//id of book
+*
+* output:success or failed
+* */
+
+app.post("/saveBook",function (req, res) {
+    res.send("success");
+});
+
+
+
 app.listen(port,function(){
     console.log(`server running on ${port}'`);
 });
