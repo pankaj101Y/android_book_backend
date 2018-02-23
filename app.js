@@ -44,8 +44,10 @@ app.post("/register",function(req,res){
         save(body,function(err,data){
             if(err)
                 return    res.send("failed");
-            if(data)
+            if(data){
+                createwishlist(data._id);
                 return  res.send(data._id);
+            }
             else
                 return res.send("failed");
         });
@@ -127,7 +129,7 @@ app.post("/searchBooks",function (req, res) {
     var search = req.body.query;
     allbook(function(err,data){
         findbook(search,data,function(data1){
-             res.send(data1);
+            res.send(data1);
         });
     });
 });
@@ -157,57 +159,22 @@ app.post("/login",function (req, res) {
     findbyemail(email,function(err,data){
         if(!data)
             res.send({status:"failed"});
-        compare(password,data.password,function(err,check){
-            if(check){
-                var user={};
-                user.name=data.name;
-                user.no=data.no;
-                user.username=data.email;
-                user.id= data._id;
-                user.status='success';
-                res.send(data);
-            }
-            else{
-                res.send({status:"failed"});
-            }
-        });
-    });
-});/*
-* inputs
- * { email:"",
- *   password:""
-* }
-*
-* outputs
-* {
-*  status:" success or failed"
-*  username:"",
-*  phone:"",
-*  id:"mongo id of user"
-* }
-*
-* */
-
-app.post("/login",function (req, res) {
-    var email = req.body.email;
-    var password = req.body.password;
-    findbyemail(email,function(err,data){
-        if(!data)
-            res.send({status:"failed"});
-        compare(password,data.password,function(err,check){
-            if(check){
-                var user={};
-                user.name=data.name;
-                user.no=data.no;
-                user.username=data.email;
-                user.id= data._id;
-                user.status='success';
-                res.send(data);
-            }
-            else{
-                res.send({status:"failed"});
-            }
-        });
+        else{
+            compare(password,data.password,function(err,check){
+                if(check){
+                    var user={};
+                    user.name=data.name;
+                    user.no=data.no;
+                    user.username=data.email;
+                    user.id= data._id;
+                    user.status='success';
+                    res.send(user);
+                }
+                else{
+                    res.send({status:"failed"});
+                }
+            });
+        }
     });
 });
 
@@ -255,7 +222,7 @@ app.post("/viewProfile",function (req, res) {
   }
 */
 app.post('/mybooks',function(req,res){
-    var id = req.body._id;
+    var id = req.body._id.toString();
     mybook(id,function(err,data){
         res.send(data);
     });
@@ -272,12 +239,10 @@ app.post('/mybooks',function(req,res){
 * */
 
 app.post("/getMyWishList",function (req, res) {
-    res.send([{status:"success",
-        name:"hp",
-        author:"kj",
-        tags:["fiction"],
-        _id:"id"}]
-        );
+    var userid= req.body.userId;
+    findwishlist(userid,function(err,data){
+        res.send(data);
+    });
 });
 
 
@@ -290,10 +255,34 @@ app.post("/getMyWishList",function (req, res) {
 * */
 
 app.post("/addToWishList",function (req, res) {
-    res.send("success");
+    var userid= req.body.userId;
+    var bookid= req.body.id;
+    additem(userid,bookid,function(err,data){
+        if(err)
+            res.send('failed');
+        else
+            res.send('success');
+    });
 });
-
-
+/*
+inputs :{
+    userid:,
+    id:
+},
+output:{
+    status
+}
+*/
+app.post('/removeitem',function(req,res){
+    var userid= req.body.userId;
+    var bookid = req.body.id;
+    removeitem(userid,bookid,function(err,data){
+        if(err)
+            res.send({status:'failed'});
+        else
+            res.send({status:'success'});
+    });
+});
 /*
 for deleting a book
   inputs:{
