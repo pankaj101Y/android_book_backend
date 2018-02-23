@@ -1,6 +1,6 @@
 var mongoose=require('mongoose');
 var schema = mongoose.Schema;
-mongoose.connect("mongodb://chairman:chairman@ds239128.mlab.com:39128/bookstore");
+mongoose.connect('mongodb://main:main@ds245548.mlab.com:45548/bstore');
 
 var userschema = new schema ({
     name :{
@@ -33,6 +33,11 @@ var bookschema = new schema({
     },
     tags:[String]
     ,
+    sqlid:{
+        type:Number,
+        required:true
+    }
+    ,
     popularity:{
         type:Number,
         default :0
@@ -40,7 +45,8 @@ var bookschema = new schema({
 });
 var cartschema = new schema ({
     userid:{
-        type:String
+        type:String,
+        unique:true
     },
     bookids:[String]
 });
@@ -51,8 +57,8 @@ var save=function(data,callback){
     var new_user= new user(data);
     new_user.save(callback);
 };
-var findbyusername=function(username,callback){
-    user.findOne({username:username},callback);
+var findbyemail=function(email,callback){
+    user.findOne({email:email},callback);
 };
 var findbyid = function(id,callback){
     user.findById(id,callback);
@@ -93,7 +99,7 @@ var findbookbyid = function(bookid,callback){
 var allbook = function(callback){
     book.find({},callback);
 };
-var createwishlist = function(userid,callback){
+var createwishlist = function(userid){
     var data={userid:userid};
     var new_cart = new cart(data);
     new_cart.save().then(function(data){
@@ -121,7 +127,7 @@ var  removeitem = function(userid ,bookid, callback){
     cart.update({userid:userid},{$pull :{bookids : bookid}},callback);
 };
 module.exports={
-    findbyusername,
+    findbyemail,
     save,
     findbyid,
     userupdate,

@@ -4,7 +4,7 @@ const app = express();
 var bodyParser = require('body-parser');
 var {hash ,compare}= require('./hashing.js');
 var {
-    findbyusername,
+    findbyemail,
     save,
     findbyid,
     userupdate,
@@ -38,6 +38,7 @@ app.use(bodyParser.json());
  * output : "failure" or  mongo id
 * */
 app.post("/register",function(req,res){
+    console.log(req.body);
     var body= req.body;
     hash(body.password,function(err,hash){
         body.password= hash;
@@ -165,7 +166,7 @@ app.post("/login",function (req, res) {
                     var user={};
                     user.name=data.name;
                     user.no=data.no;
-                    user.username=data.email;
+                    user.email=data.email;
                     user.id= data._id;
                     user.status='success';
                     res.send(user);
@@ -222,7 +223,7 @@ app.post("/viewProfile",function (req, res) {
   }
 */
 app.post('/mybooks',function(req,res){
-    var id = req.body._id.toString();
+    var id = req.body._id;
     mybook(id,function(err,data){
         res.send(data);
     });
