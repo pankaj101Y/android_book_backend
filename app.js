@@ -60,6 +60,7 @@ app.post("/register",function(req,res){
  * tags:""
  * }
  *
+ * output
  * serverId:" null in case of any failure"
  *
  */
@@ -129,6 +130,47 @@ app.post("/searchBooks",function (req, res) {
              res.send(data1);
         });
     });
+});
+
+
+/////////////////////////////////////// new routes////////////
+
+/*
+* inputs
+ * { username:"",
+ *   password:""
+* }
+*
+* outputs
+* {
+*  status:" success or failed"
+*  username:"",
+*  phone:"",
+*  id:"mongo id of user"
+* }
+*
+* */
+
+app.post("/login",function (req, res) {
+    res.send({response:"ffdfdff"});
+});
+
+
+
+/*
+* input  {id:"user mongoId"}
+*
+* output: {status:"success or failed"
+*          name:"",
+*          phoneNumber:""
+* }
+*
+*
+* viewProfile implement karne ke liye addBook function mein user ki id bhi save karni hogi
+* books ke saath
+* */
+app.post("/viewProfile",function (req, res) {
+
 });
 
 app.listen(port,function(){
