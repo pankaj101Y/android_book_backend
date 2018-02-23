@@ -255,7 +255,7 @@ app.post("/viewProfile",function (req, res) {
   }
 */
 app.post('/mybooks',function(req,res){
-    var id = req.body._id.toString();
+    var id = req.body._id;
     mybook(id,function(err,data){
         res.send(data);
     });
