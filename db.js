@@ -33,11 +33,6 @@ var bookschema = new schema({
     },
     tags:[String]
     ,
-    sqlid:{
-        type:Number,
-        required:true
-    }
-    ,
     popularity:{
         type:Number,
         default :0
