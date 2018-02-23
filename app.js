@@ -156,7 +156,8 @@ app.post("/login",function (req, res) {
         {
             status:"this",
             username:"pankaj@323",
-            password:"password"
+            phone:"phone",
+            id:"id"
         });
 });
 
