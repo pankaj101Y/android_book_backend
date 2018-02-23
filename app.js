@@ -210,7 +210,7 @@ app.get("/getBook",function (req, res) {
 *
 * */
 
-app.get("/getMyBooks",function (req, res) {
+app.post("/getMyBooks",function (req, res) {
     res.send({status:"success",
         name:"hp",
         author:"kj",
@@ -228,7 +228,7 @@ app.get("/getMyBooks",function (req, res) {
 *
 * */
 
-app.get("/getMyWishList",function (req, res) {
+app.post("/getMyWishList",function (req, res) {
     res.send({status:"success",
         bookName:"hp",
         bookAuthor:"kj",
