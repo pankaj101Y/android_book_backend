@@ -246,7 +246,7 @@ app.post("/getMyWishList",function (req, res) {
 * output:success or failed
 * */
 
-app.post("/saveBook",function (req, res) {
+app.post("/addToWishList",function (req, res) {
     res.send("success");
 });
 
