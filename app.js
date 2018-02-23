@@ -211,11 +211,11 @@ app.get("/getBook",function (req, res) {
 * */
 
 app.post("/getMyBooks",function (req, res) {
-    res.send({status:"success",
+    res.send([{status:"success",
         name:"hp",
         author:"kj",
         tags:["fiction"],
-        _id:"this is s"});
+        _id:"this is s"}]);
 });
 
 
@@ -229,11 +229,11 @@ app.post("/getMyBooks",function (req, res) {
 * */
 
 app.post("/getMyWishList",function (req, res) {
-    res.send({status:"success",
+    res.send([{status:"success",
         name:"hp",
         author:"kj",
         tags:["fiction"],
-        _id:"id"}
+        _id:"id"}]
         );
 });
 
@@ -242,7 +242,7 @@ app.post("/getMyWishList",function (req, res) {
 * saves book in my wish list
 *
 * input :{id:""}//id of book
-*
+*type :"my book or in wish list"
 * output:success or failed
 * */
 
